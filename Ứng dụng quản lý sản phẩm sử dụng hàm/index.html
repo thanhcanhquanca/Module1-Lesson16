@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng quản lý sản phẩm</title>
+</head>
+<body>
+<h2>Quản lý sản phẩm</h2>
+
+<form>
+    <input type="text" placeholder="nhap vao du lieu" id="_input">
+    <button type="button" id="btnSave" onclick="saveProduct()">Creat</button>
+</form>
+<table border="1">
+    <tr>
+       <th>Stt</th>
+        <th>Product Name</th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    <tbody id="content"></tbody>
+
+
+</table>
+<script>
+    const array_list = ["Tao","Mit","Buoi","Na"];
+    const content = document.getElementById("content");
+    displayProduct();
+    let productIndex = -1;
+
+    function displayProduct() {
+        let tbody = "";
+        for (let i = 0; i < array_list.length; i++) {
+            tbody +=
+                `<tr>
+                    <td>${i + 1}</td>
+                    <td>${array_list[i]}</td>
+                    <td><button onclick="editProduct(${i})">Edit</button></td>
+                    <td><button onclick="deleteProduct(${i})">Delete</button></td>
+                </tr>`
+
+        }
+        content.innerHTML = tbody;
+    }
+
+    function deleteProduct(index) {
+       array_list.splice(index, 1);
+       displayProduct();
+    }
+
+    function editProduct(index) {
+        productIndex = index;
+        document.getElementById("_input").value = array_list[index];
+        document.getElementById("btnSave").innerText = "Update"
+
+    }
+
+    function saveProduct() {
+            const nameProduct = document.getElementById("_input").value.trim();
+            if (!nameProduct){
+                return `vui long nhap vao san pham`
+            }
+
+            if (productIndex !== -1){
+                array_list[productIndex] = nameProduct;
+                productIndex = -1;
+                document.getElementById("btnSave").innerText = "Creat"
+
+            }else {
+                array_list.push(nameProduct);
+
+            }
+
+        document.getElementById("_input").value = '';
+        displayProduct();
+
+    }
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
